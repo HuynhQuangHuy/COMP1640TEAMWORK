@@ -171,15 +171,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoryOfIdeasController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdeasController.cs" />
+    <Compile Include="Controllers\IdeaUsersController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203070829261_IntialDb.cs" />
-    <Compile Include="Migrations\202203070829261_IntialDb.designer.cs">
-      <DependentUpon>202203070829261_IntialDb.cs</DependentUpon>
+    <Compile Include="Migrations\202203080446180_initDb.cs" />
+    <Compile Include="Migrations\202203080446180_initDb.designer.cs">
+      <DependentUpon>202203080446180_initDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -189,11 +194,14 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
-    <Compile Include="Models\CategoryOfIdeas.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\C__MigrationHistory.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Ideas.cs" />
+    <Compile Include="Models\IdeaUser.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\UserInRolesViewModel.cs" />
@@ -254,11 +262,36 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\CategoryOfIdeas\Create.cshtml" />
-    <Content Include="Views\CategoryOfIdeas\Delete.cshtml" />
-    <Content Include="Views\CategoryOfIdeas\Details.cshtml" />
-    <Content Include="Views\CategoryOfIdeas\Edit.cshtml" />
-    <Content Include="Views\CategoryOfIdeas\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Ideas\Create.cshtml" />
+    <Content Include="Views\Ideas\Delete.cshtml" />
+    <Content Include="Views\Ideas\Details.cshtml" />
+    <Content Include="Views\Ideas\Edit.cshtml" />
+    <Content Include="Views\Ideas\Index.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\IdeaUsers\Create.cshtml" />
+    <Content Include="Views\IdeaUsers\Delete.cshtml" />
+    <Content Include="Views\IdeaUsers\Details.cshtml" />
+    <Content Include="Views\IdeaUsers\Edit.cshtml" />
+    <Content Include="Views\IdeaUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -277,8 +310,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203070829261_IntialDb.resx">
-      <DependentUpon>202203070829261_IntialDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203080446180_initDb.resx">
+      <DependentUpon>202203080446180_initDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

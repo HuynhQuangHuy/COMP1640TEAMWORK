@@ -7,13 +7,13 @@ namespace TeamWork.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class IntialDb : IMigrationMetadata
+    public sealed partial class initDb : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(IntialDb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initDb));
         
         string IMigrationMetadata.Id
         {
-            get { return "202203070829261_IntialDb"; }
+            get { return "202203080446180_initDb"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,107 +10,107 @@ using TeamWork.Models;
 
 namespace TeamWork.Controllers
 {
-    public class CategoryOfIdeasController : Controller
+    public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: CategoryOfIdeas
+        // GET: Categories
         public ActionResult Index()
         {
-            return View(db.CategoryOfIdeas.ToList());
+            return View(db.Categorie.ToList());
         }
 
-        // GET: CategoryOfIdeas/Details/5
+        // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CategoryOfIdeas categoryOfIdeas = db.CategoryOfIdeas.Find(id);
-            if (categoryOfIdeas == null)
+            Category categories = db.Categorie.Find(id);
+            if (categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categoryOfIdeas);
+            return View(categories);
         }
 
-        // GET: CategoryOfIdeas/Create
+        // GET: Categories/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CategoryOfIdeas/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryOfIdeaID,Description")] CategoryOfIdeas categoryOfIdeas)
+        public ActionResult Create([Bind(Include = "Id,Name")] Category categories)
         {
             if (ModelState.IsValid)
             {
-                db.CategoryOfIdeas.Add(categoryOfIdeas);
+                db.Categorie.Add(categories);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categoryOfIdeas);
+            return View(categories);
         }
 
-        // GET: CategoryOfIdeas/Edit/5
+        // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CategoryOfIdeas categoryOfIdeas = db.CategoryOfIdeas.Find(id);
-            if (categoryOfIdeas == null)
+            Category categories = db.Categorie.Find(id);
+            if (categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categoryOfIdeas);
+            return View(categories);
         }
 
-        // POST: CategoryOfIdeas/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryOfIdeaID,Description")] CategoryOfIdeas categoryOfIdeas)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Category categories)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categoryOfIdeas).State = EntityState.Modified;
+                db.Entry(categories).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categoryOfIdeas);
+            return View(categories);
         }
 
-        // GET: CategoryOfIdeas/Delete/5
+        // GET: Categories/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CategoryOfIdeas categoryOfIdeas = db.CategoryOfIdeas.Find(id);
-            if (categoryOfIdeas == null)
+            Category categories = db.Categorie.Find(id);
+            if (categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categoryOfIdeas);
+            return View(categories);
         }
 
-        // POST: CategoryOfIdeas/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CategoryOfIdeas categoryOfIdeas = db.CategoryOfIdeas.Find(id);
-            db.CategoryOfIdeas.Remove(categoryOfIdeas);
+            Category categories = db.Categorie.Find(id);
+            db.Categorie.Remove(categories);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

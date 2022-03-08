@@ -171,7 +171,7 @@ namespace TeamWork.Controllers
                     //Assign Role to user Here       
                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
                     //Ends Here     
-                    return RedirectToAction("Index", "Admins");
+                    return RedirectToAction("Index", "Home");
                 }
                 ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin") && !u.Name.Contains("Marketing Manager"))
                                                 .ToList(), "Name", "Name");

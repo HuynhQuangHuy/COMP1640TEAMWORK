@@ -10,10 +10,15 @@ namespace TeamWork.Models
 		{
 		}
 
-		public DbSet<Ideas> Ideas { get; set; }
-		public DbSet<CategoryOfIdeas> CategoryOfIdeas { get; set; }
+		public DbSet<Idea> Ideas { get; set; }
+		public DbSet<Department> Departments { get; set; }
+		public DbSet<Item> Items { get; set; }
+		public DbSet<Category> Categories { get; set; }
+		public DbSet<Comment> Comments { get; set; }
+		public DbSet<IdeaUser> IdeasUsers { get; set; }
+		
 
-		public DbSet<Products> Products { get; set; }
+
 
 		public static ApplicationDbContext Create()
 		{

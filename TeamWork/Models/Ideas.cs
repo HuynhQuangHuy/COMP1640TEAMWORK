@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
+
 namespace TeamWork.Models
 {
-    public class Ideas
+    public class Idea
     {
-        [Key]
-        public int IdeaID { get; set; }
+      
+        public int Id { get; set; }
 
-        public string NameOfIdea { get; set; }
+        public int ItemId { get; set; }
+        public int Item { get; set; }
 
-        public int CategoryOfIdeaID { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public string Decription { get; set; }
+
+
+
     }
 }
