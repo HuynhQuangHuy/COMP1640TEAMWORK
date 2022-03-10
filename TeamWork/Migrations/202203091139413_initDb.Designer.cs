@@ -13,7 +13,7 @@ namespace TeamWork.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202203080446180_initDb"; }
+            get { return "202203091139413_initDb"; }
         }
         
         string IMigrationMetadata.Source

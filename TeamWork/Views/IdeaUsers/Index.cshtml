@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeamWork.Models.IdeaUsers>
+﻿@model IEnumerable<TeamWork.Models.IdeaUser>
 
 @{
     ViewBag.Title = "Index";
@@ -13,10 +13,17 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CommentId)
+            @*@Html.DisplayNameFor(model => model.Comment.Description)*@
+            Comment
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Idea.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsThumbUp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsThumbDown)
         </th>
         <th></th>
     </tr>
@@ -24,15 +31,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CommentId)
+            @Html.DisplayFor(modelItem => item.Comment.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Idea.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsThumbUp)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdeaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdeaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdeaId })
+            @Html.DisplayFor(modelItem => item.IsThumbDown)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

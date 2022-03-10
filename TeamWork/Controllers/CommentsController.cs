@@ -17,7 +17,8 @@ namespace TeamWork.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Comment.ToList());
+            var comments = db.Comments.Include(c => c.Idea);
+            return View(comments.ToList());
         }
 
         // GET: Comments/Details/5
@@ -27,17 +28,18 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comments = db.Comment.Find(id);
-            if (comments == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(comments);
+            return View(comment);
         }
 
         // GET: Comments/Create
         public ActionResult Create()
         {
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description");
             return View();
         }
 
@@ -46,16 +48,17 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdeaId,Description")] Comment comments)
+        public ActionResult Create([Bind(Include = "Id,IdeaId,Description")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                db.Comment.Add(comments);
+                db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(comments);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", comment.IdeaId);
+            return View(comment);
         }
 
         // GET: Comments/Edit/5
@@ -65,12 +68,13 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comments = db.Comment.Find(id);
-            if (comments == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(comments);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", comment.IdeaId);
+            return View(comment);
         }
 
         // POST: Comments/Edit/5
@@ -78,15 +82,16 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdeaId,Description")] Comment comments)
+        public ActionResult Edit([Bind(Include = "Id,IdeaId,Description")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comments).State = EntityState.Modified;
+                db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(comments);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", comment.IdeaId);
+            return View(comment);
         }
 
         // GET: Comments/Delete/5
@@ -96,12 +101,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comments = db.Comment.Find(id);
-            if (comments == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(comments);
+            return View(comment);
         }
 
         // POST: Comments/Delete/5
@@ -109,8 +114,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comments = db.Comment.Find(id);
-            db.Comment.Remove(comments);
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

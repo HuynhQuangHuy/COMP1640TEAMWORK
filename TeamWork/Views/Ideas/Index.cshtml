@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeamWork.Models.Ideas>
+﻿@model IEnumerable<TeamWork.Models.Idea>
 
 @{
     ViewBag.Title = "Index";
@@ -13,13 +13,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ItemId)
+            @Html.DisplayNameFor(model => model.Item.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Decription)
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UrlFile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameOfFile)
         </th>
         <th></th>
     </tr>
@@ -27,13 +36,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
+            @Html.DisplayFor(modelItem => item.Item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Decription)
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UrlFile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameOfFile)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

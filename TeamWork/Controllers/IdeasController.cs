@@ -17,7 +17,8 @@ namespace TeamWork.Controllers
         // GET: Ideas
         public ActionResult Index()
         {
-            return View(db.Ideas.ToList());
+            var ideas = db.Ideas.Include(i => i.Item);
+            return View(ideas.ToList());
         }
 
         // GET: Ideas/Details/5
@@ -27,17 +28,18 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Idea ideas = db.Ideas.Find(id);
-            if (ideas == null)
+            Idea idea = db.Ideas.Find(id);
+            if (idea == null)
             {
                 return HttpNotFound();
             }
-            return View(ideas);
+            return View(idea);
         }
 
         // GET: Ideas/Create
         public ActionResult Create()
         {
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");
             return View();
         }
 
@@ -46,16 +48,17 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,UserId,Decription")] Idea ideas)
+        public ActionResult Create([Bind(Include = "Id,ItemId,Description,CreatedAt,File,UrlFile,NameOfFile")] Idea idea)
         {
             if (ModelState.IsValid)
             {
-                db.Ideas.Add(ideas);
+                db.Ideas.Add(idea);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(ideas);
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
+            return View(idea);
         }
 
         // GET: Ideas/Edit/5
@@ -65,12 +68,13 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Idea ideas = db.Ideas.Find(id);
-            if (ideas == null)
+            Idea idea = db.Ideas.Find(id);
+            if (idea == null)
             {
                 return HttpNotFound();
             }
-            return View(ideas);
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
+            return View(idea);
         }
 
         // POST: Ideas/Edit/5
@@ -78,15 +82,16 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemId,UserId,Decription")] Idea ideas)
+        public ActionResult Edit([Bind(Include = "Id,ItemId,Description,CreatedAt,File,UrlFile,NameOfFile")] Idea idea)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ideas).State = EntityState.Modified;
+                db.Entry(idea).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(ideas);
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
+            return View(idea);
         }
 
         // GET: Ideas/Delete/5
@@ -96,12 +101,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Idea ideas = db.Ideas.Find(id);
-            if (ideas == null)
+            Idea idea = db.Ideas.Find(id);
+            if (idea == null)
             {
                 return HttpNotFound();
             }
-            return View(ideas);
+            return View(idea);
         }
 
         // POST: Ideas/Delete/5
@@ -109,8 +114,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Idea ideas = db.Ideas.Find(id);
-            db.Ideas.Remove(ideas);
+            Idea idea = db.Ideas.Find(id);
+            db.Ideas.Remove(idea);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,4 @@
-﻿@model TeamWork.Models.Items
+﻿@model TeamWork.Models.Item
 
 @{
     ViewBag.Title = "Details";
@@ -8,47 +8,55 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Items</h4>
+    <h4>Item</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
+            @Html.DisplayNameFor(model => model.Category.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CategoryId)
+            @Html.DisplayFor(model => model.Category.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DepartmentId)
+            @Html.DisplayNameFor(model => model.Department.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DepartmentId)
+            @Html.DisplayFor(model => model.Department.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EndedAt)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EndedAt)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            @Html.DisplayNameFor(model => model.CreateBy)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
+            @Html.DisplayFor(model => model.CreateBy)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Decription)
+            @Html.DisplayNameFor(model => model.StartDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Decription)
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
         </dd>
 
     </dl>

@@ -1,4 +1,4 @@
-﻿@model TeamWork.Models.Ideas
+﻿@model TeamWork.Models.Idea
 
 @{
     ViewBag.Title = "Details";
@@ -8,31 +8,55 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Ideas</h4>
+    <h4>Idea</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ItemId)
+            @Html.DisplayNameFor(model => model.Item.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ItemId)
+            @Html.DisplayFor(model => model.Item.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Decription)
+            @Html.DisplayNameFor(model => model.CreatedAt)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Decription)
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.File)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.File)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameOfFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameOfFile)
         </dd>
 
     </dl>

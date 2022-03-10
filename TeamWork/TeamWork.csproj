@@ -182,9 +182,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203080446180_initDb.cs" />
-    <Compile Include="Migrations\202203080446180_initDb.designer.cs">
-      <DependentUpon>202203080446180_initDb.cs</DependentUpon>
+    <Compile Include="Migrations\202203091139413_initDb.cs" />
+    <Compile Include="Migrations\202203091139413_initDb.designer.cs">
+      <DependentUpon>202203091139413_initDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -196,9 +196,8 @@
     <Compile Include="Models\AspNetUserLogin.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Ideas.cs" />
+    <Compile Include="Models\Idea.cs" />
     <Compile Include="Models\IdeaUser.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -262,31 +261,31 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Departments\Create.cshtml" />
-    <Content Include="Views\Departments\Delete.cshtml" />
-    <Content Include="Views\Departments\Details.cshtml" />
-    <Content Include="Views\Departments\Edit.cshtml" />
-    <Content Include="Views\Departments\Index.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Details.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Ideas\Create.cshtml" />
-    <Content Include="Views\Ideas\Delete.cshtml" />
-    <Content Include="Views\Ideas\Details.cshtml" />
-    <Content Include="Views\Ideas\Edit.cshtml" />
-    <Content Include="Views\Ideas\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
     <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Ideas\Create.cshtml" />
+    <Content Include="Views\Ideas\Delete.cshtml" />
+    <Content Include="Views\Ideas\Details.cshtml" />
+    <Content Include="Views\Ideas\Edit.cshtml" />
+    <Content Include="Views\Ideas\Index.cshtml" />
     <Content Include="Views\IdeaUsers\Create.cshtml" />
     <Content Include="Views\IdeaUsers\Delete.cshtml" />
     <Content Include="Views\IdeaUsers\Details.cshtml" />
@@ -310,8 +309,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203080446180_initDb.resx">
-      <DependentUpon>202203080446180_initDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203091139413_initDb.resx">
+      <DependentUpon>202203091139413_initDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,7 +17,8 @@ namespace TeamWork.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            return View(db.Item.ToList());
+            var items = db.Items.Include(i => i.Category).Include(i => i.Department);
+            return View(items.ToList());
         }
 
         // GET: Items/Details/5
@@ -27,17 +28,19 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item items = db.Item.Find(id);
-            if (items == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(items);
+            return View(item);
         }
 
         // GET: Items/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Name");
             return View();
         }
 
@@ -46,16 +49,18 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryId,DepartmentId,EndedAt,CreatedAt,Decription")] Item items)
+        public ActionResult Create([Bind(Include = "Id,Name,CreateBy,StartDate,EndDate,CategoryId,DepartmentId")] Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Item.Add(items);
+                db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(items);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", item.CategoryId);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Name", item.DepartmentId);
+            return View(item);
         }
 
         // GET: Items/Edit/5
@@ -65,12 +70,14 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item items = db.Item.Find(id);
-            if (items == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(items);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", item.CategoryId);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Name", item.DepartmentId);
+            return View(item);
         }
 
         // POST: Items/Edit/5
@@ -78,15 +85,17 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryId,DepartmentId,EndedAt,CreatedAt,Decription")] Item items)
+        public ActionResult Edit([Bind(Include = "Id,Name,CreateBy,StartDate,EndDate,CategoryId,DepartmentId")] Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(items).State = EntityState.Modified;
+                db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(items);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", item.CategoryId);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Name", item.DepartmentId);
+            return View(item);
         }
 
         // GET: Items/Delete/5
@@ -96,12 +105,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item items = db.Item.Find(id);
-            if (items == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(items);
+            return View(item);
         }
 
         // POST: Items/Delete/5
@@ -109,8 +118,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item items = db.Item.Find(id);
-            db.Item.Remove(items);
+            Item item = db.Items.Find(id);
+            db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

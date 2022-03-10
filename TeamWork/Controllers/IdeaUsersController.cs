@@ -17,7 +17,8 @@ namespace TeamWork.Controllers
         // GET: IdeaUsers
         public ActionResult Index()
         {
-            return View(db.IdeaUser.ToList());
+            var ideaUsers = db.IdeaUsers.Include(i => i.Comment).Include(i => i.Idea);
+            return View(ideaUsers.ToList());
         }
 
         // GET: IdeaUsers/Details/5
@@ -27,17 +28,19 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaUser ideaUsers = db.IdeaUser.Find(id);
-            if (ideaUsers == null)
+            IdeaUser ideaUser = db.IdeaUsers.Find(id);
+            if (ideaUser == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaUsers);
+            return View(ideaUser);
         }
 
         // GET: IdeaUsers/Create
         public ActionResult Create()
         {
+            ViewBag.CommentId = new SelectList(db.Comments, "Id", "Description");
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description");
             return View();
         }
 
@@ -46,16 +49,18 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdeaId,CommentId,IsThumbUp")] IdeaUser ideaUsers)
+        public ActionResult Create([Bind(Include = "Id,IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
         {
             if (ModelState.IsValid)
             {
-                db.IdeaUser.Add(ideaUsers);
+                db.IdeaUsers.Add(ideaUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(ideaUsers);
+            ViewBag.CommentId = new SelectList(db.Comments, "Id", "Description", ideaUser.CommentId);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", ideaUser.IdeaId);
+            return View(ideaUser);
         }
 
         // GET: IdeaUsers/Edit/5
@@ -65,12 +70,14 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaUser ideaUsers = db.IdeaUser.Find(id);
-            if (ideaUsers == null)
+            IdeaUser ideaUser = db.IdeaUsers.Find(id);
+            if (ideaUser == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaUsers);
+            ViewBag.CommentId = new SelectList(db.Comments, "Id", "Description", ideaUser.CommentId);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", ideaUser.IdeaId);
+            return View(ideaUser);
         }
 
         // POST: IdeaUsers/Edit/5
@@ -78,15 +85,17 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdeaId,CommentId,IsThumbUp")] IdeaUser ideaUsers)
+        public ActionResult Edit([Bind(Include = "Id,IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ideaUsers).State = EntityState.Modified;
+                db.Entry(ideaUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(ideaUsers);
+            ViewBag.CommentId = new SelectList(db.Comments, "Id", "Description", ideaUser.CommentId);
+            ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description", ideaUser.IdeaId);
+            return View(ideaUser);
         }
 
         // GET: IdeaUsers/Delete/5
@@ -96,12 +105,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdeaUser ideaUsers = db.IdeaUser.Find(id);
-            if (ideaUsers == null)
+            IdeaUser ideaUser = db.IdeaUsers.Find(id);
+            if (ideaUser == null)
             {
                 return HttpNotFound();
             }
-            return View(ideaUsers);
+            return View(ideaUser);
         }
 
         // POST: IdeaUsers/Delete/5
@@ -109,8 +118,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            IdeaUser ideaUsers = db.IdeaUser.Find(id);
-            db.IdeaUser.Remove(ideaUsers);
+            IdeaUser ideaUser = db.IdeaUsers.Find(id);
+            db.IdeaUsers.Remove(ideaUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeamWork.Models.Items>
+﻿@model IEnumerable<TeamWork.Models.Item>
 
 @{
     ViewBag.Title = "Index";
@@ -13,19 +13,24 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
+            @*@Html.DisplayNameFor(model => model.Category.Name)*@
+            Category
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DepartmentId)
+            @*@Html.DisplayNameFor(model => model.Department.Name)*@
+            Department
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndedAt)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            @Html.DisplayNameFor(model => model.CreateBy)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Decription)
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
         </th>
         <th></th>
     </tr>
@@ -33,19 +38,24 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
+            @Html.DisplayFor(modelItem => item.Category.Name)
+            
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DepartmentId)
+            @Html.DisplayFor(modelItem => item.Department.Name)
+            
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndedAt)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
+            @Html.DisplayFor(modelItem => item.CreateBy)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Decription)
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

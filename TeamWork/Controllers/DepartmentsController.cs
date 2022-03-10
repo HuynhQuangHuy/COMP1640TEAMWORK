@@ -17,7 +17,7 @@ namespace TeamWork.Controllers
         // GET: Departments
         public ActionResult Index()
         {
-            return View(db.Department.ToList());
+            return View(db.Departments.ToList());
         }
 
         // GET: Departments/Details/5
@@ -27,7 +27,7 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Department.Find(id);
+            Department department = db.Departments.Find(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace TeamWork.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Department.Add(department);
+                db.Departments.Add(department);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Department.Find(id);
+            Department department = db.Departments.Find(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Department.Find(id);
+            Department department = db.Departments.Find(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Department department = db.Department.Find(id);
-            db.Department.Remove(department);
+            Department department = db.Departments.Find(id);
+            db.Departments.Remove(department);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

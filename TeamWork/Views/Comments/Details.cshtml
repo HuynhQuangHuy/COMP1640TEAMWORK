@@ -1,4 +1,4 @@
-﻿@model TeamWork.Models.Comments
+﻿@model TeamWork.Models.Comment
 
 @{
     ViewBag.Title = "Details";
@@ -8,15 +8,15 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Comments</h4>
+    <h4>Comment</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.IdeaId)
+            @Html.DisplayNameFor(model => model.Idea.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdeaId)
+            @Html.DisplayFor(model => model.Idea.Description)
         </dd>
 
         <dt>

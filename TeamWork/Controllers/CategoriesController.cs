@@ -17,7 +17,7 @@ namespace TeamWork.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categorie.ToList());
+            return View(db.Categories.ToList());
         }
 
         // GET: Categories/Details/5
@@ -27,12 +27,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category categories = db.Categorie.Find(id);
-            if (categories == null)
+            Category category = db.Categories.Find(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            return View(category);
         }
 
         // GET: Categories/Create
@@ -46,16 +46,16 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Category categories)
+        public ActionResult Create([Bind(Include = "Id,Name,Description")] Category category)
         {
             if (ModelState.IsValid)
             {
-                db.Categorie.Add(categories);
+                db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categories);
+            return View(category);
         }
 
         // GET: Categories/Edit/5
@@ -65,12 +65,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category categories = db.Categorie.Find(id);
-            if (categories == null)
+            Category category = db.Categories.Find(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            return View(category);
         }
 
         // POST: Categories/Edit/5
@@ -78,15 +78,15 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Category categories)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description")] Category category)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categories).State = EntityState.Modified;
+                db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categories);
+            return View(category);
         }
 
         // GET: Categories/Delete/5
@@ -96,12 +96,12 @@ namespace TeamWork.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category categories = db.Categorie.Find(id);
-            if (categories == null)
+            Category category = db.Categories.Find(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            return View(category);
         }
 
         // POST: Categories/Delete/5
@@ -109,8 +109,8 @@ namespace TeamWork.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category categories = db.Categorie.Find(id);
-            db.Categorie.Remove(categories);
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
