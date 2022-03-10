@@ -26,6 +26,7 @@ namespace TeamWork.Models
 
         public DateTime CreatedAt { get; set; }
 
+       
         public byte[] File { get; set; }
 
         public string UrlFile { get; set; }
