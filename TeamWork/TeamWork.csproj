@@ -182,18 +182,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203091139413_initDb.cs" />
-    <Compile Include="Migrations\202203091139413_initDb.designer.cs">
-      <DependentUpon>202203091139413_initDb.cs</DependentUpon>
+    <Compile Include="Migrations\202203100805213_i.cs" />
+    <Compile Include="Migrations\202203100805213_i.designer.cs">
+      <DependentUpon>202203100805213_i.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203100843452_initdb.cs" />
+    <Compile Include="Migrations\202203100843452_initdb.designer.cs">
+      <DependentUpon>202203100843452_initdb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\AspNetRole.cs" />
-    <Compile Include="Models\AspNetUser.cs" />
-    <Compile Include="Models\AspNetUserClaim.cs" />
-    <Compile Include="Models\AspNetUserLogin.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Department.cs" />
@@ -309,8 +309,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203091139413_initDb.resx">
-      <DependentUpon>202203091139413_initDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203100805213_i.resx">
+      <DependentUpon>202203100805213_i.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203100843452_initdb.resx">
+      <DependentUpon>202203100843452_initdb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

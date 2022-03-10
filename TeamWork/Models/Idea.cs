@@ -12,8 +12,11 @@ namespace TeamWork.Models
         public int Id { get; set; }
 
         public int ItemId { get; set; }
-        [ForeignKey("ItemId")]
+        
         public Item Item { get; set; }
+
+        public int UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         [Required]
         [DisplayName("Idea Description")]

@@ -49,7 +49,7 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
+        public ActionResult Create([Bind(Include = "IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
+        public ActionResult Edit([Bind(Include = "IdeaId,CommentId,IsThumbUp,IsThumbDown")] IdeaUser ideaUser)
         {
             if (ModelState.IsValid)
             {
