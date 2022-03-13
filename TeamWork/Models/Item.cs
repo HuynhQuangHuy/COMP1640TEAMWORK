@@ -12,7 +12,8 @@ namespace TeamWork.Models
         public string CreateBy { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-    
+        public string CoordinatorId { get; set; }
+        public ApplicationUser Coordinator { get; set; }
         public string Limitation
         {
             get { return StartDate.ToShortDateString() + " - " + EndDate.ToShortDateString(); }

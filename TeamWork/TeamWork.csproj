@@ -171,25 +171,35 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\FileClassesController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeasController.cs" />
     <Compile Include="Controllers\IdeaUsersController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203100805213_i.cs" />
-    <Compile Include="Migrations\202203100805213_i.designer.cs">
-      <DependentUpon>202203100805213_i.cs</DependentUpon>
+    <Compile Include="Migrations\202203101232153_initdb.cs" />
+    <Compile Include="Migrations\202203101232153_initdb.designer.cs">
+      <DependentUpon>202203101232153_initdb.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203100843452_initdb.cs" />
-    <Compile Include="Migrations\202203100843452_initdb.designer.cs">
-      <DependentUpon>202203100843452_initdb.cs</DependentUpon>
+    <Compile Include="Migrations\202203101254101_initdbb.cs" />
+    <Compile Include="Migrations\202203101254101_initdbb.designer.cs">
+      <DependentUpon>202203101254101_initdbb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203130313201_UIDstring.cs" />
+    <Compile Include="Migrations\202203130313201_UIDstring.designer.cs">
+      <DependentUpon>202203130313201_UIDstring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203130340487_cordinator.cs" />
+    <Compile Include="Migrations\202203130340487_cordinator.designer.cs">
+      <DependentUpon>202203130340487_cordinator.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -198,11 +208,12 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\FileClass.cs" />
+    <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Idea.cs" />
     <Compile Include="Models\IdeaUser.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ObjFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\UserInRolesViewModel.cs" />
@@ -293,11 +304,19 @@
     <Content Include="Views\IdeaUsers\Details.cshtml" />
     <Content Include="Views\IdeaUsers\Edit.cshtml" />
     <Content Include="Views\IdeaUsers\Index.cshtml" />
-    <Content Include="Views\Media\Index.cshtml" />
+    <Content Include="Views\FileClasses\Create.cshtml" />
+    <Content Include="Views\FileClasses\Delete.cshtml" />
+    <Content Include="Views\FileClasses\Details.cshtml" />
+    <Content Include="Views\FileClasses\Edit.cshtml" />
+    <Content Include="Views\FileClasses\Index.cshtml" />
+    <Content Include="Views\Files\Index.cshtml" />
+    <Content Include="Views\Admin.cshtml" />
+    <Content Include="Views\Admins\Index.cshtml" />
+    <Content Include="Views\Admins\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Files\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -313,11 +332,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203100805213_i.resx">
-      <DependentUpon>202203100805213_i.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203101232153_initdb.resx">
+      <DependentUpon>202203101232153_initdb.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203100843452_initdb.resx">
-      <DependentUpon>202203100843452_initdb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203101254101_initdbb.resx">
+      <DependentUpon>202203101254101_initdbb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203130313201_UIDstring.resx">
+      <DependentUpon>202203130313201_UIDstring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203130340487_cordinator.resx">
+      <DependentUpon>202203130340487_cordinator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

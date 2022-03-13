@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamWork", "TeamWork\TeamWork.csproj", "{303C6E2F-0DC1-42DF-BBFF-B4859DF28BBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostSys", "..\..\Example\PostSys\PostSys.csproj", "{031FA1B7-B913-4D65-8C20-630BAEC83932}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{303C6E2F-0DC1-42DF-BBFF-B4859DF28BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{303C6E2F-0DC1-42DF-BBFF-B4859DF28BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{303C6E2F-0DC1-42DF-BBFF-B4859DF28BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{031FA1B7-B913-4D65-8C20-630BAEC83932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{031FA1B7-B913-4D65-8C20-630BAEC83932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{031FA1B7-B913-4D65-8C20-630BAEC83932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{031FA1B7-B913-4D65-8C20-630BAEC83932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

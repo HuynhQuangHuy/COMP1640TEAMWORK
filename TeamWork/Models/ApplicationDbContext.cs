@@ -9,6 +9,8 @@ namespace TeamWork.Models
 			: base("Team4", throwIfV1Schema: false)
 		{
 		}
+		public DbSet<FileUpload> FileUploads { get; set; }
+		public DbSet<FileClass> Fileclasses { get; set; }
 
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Comment> Comments { get; set; }

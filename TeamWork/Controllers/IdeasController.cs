@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using TeamWork.Models;
+using TeamWork.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Net.Mail;
+using System.Text;
 using System.Web.Mvc;
-using TeamWork.Models;
 
 namespace TeamWork.Controllers
 {
@@ -128,5 +132,61 @@ namespace TeamWork.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Email
+        public bool SendEmail(string toEmail, string emailSubject, string emailBody)
+        {
+
+            var senderEmail = ConfigurationManager.AppSettings["SenderEmail"].ToString();
+            var senderPassword = ConfigurationManager.AppSettings["SenderPassword"].ToString();
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+            MailMessage mailMessage = new MailMessage(senderEmail, toEmail, emailSubject, emailBody);
+            mailMessage.IsBodyHtml = true;
+            mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+
+            smtpClient.Send(mailMessage);
+
+            return true;
+
+
+        }
+
+        public ActionResult SendEmailToUser()
+        {
+            bool result = false;
+
+            var currentUser = User.Identity.GetUserId();
+            var getUserName = User.Identity.GetUserName();
+
+
+            //Get current Coordinator Email
+            var CourseClass = (from c in db.Ideas
+                               where c.UserId.Contains(currentUser)
+                               join cl in db.Items
+                               on c.ItemId equals cl.Id
+                               select cl.CoordinatorId).ToList();
+            var CoorId = "081de30f-8ccd-427f-9adf-6fe8a4a9adac";
+
+            var coordinator = db.Users.Where(m => m.Id.Contains(CoorId)).Select(m => m.Email).ToList();
+            var coordinatorEmail = coordinator[0];
+
+            //Get current Idea description
+            var course = db.Ideas.Where(m => m.UserId.Contains(currentUser)).Select(m => m.Description).ToList();
+            var courseName = course[0];
+
+
+            result = SendEmail($"{coordinatorEmail}", "Notification Email", $"Staff: {getUserName} <br> Ideas: {courseName} <br> Already submit a post");
+
+
+            Json(result, JsonRequestBehavior.AllowGet);
+            return View();
+        }
+
     }
 }
