@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Team4", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -31,12 +31,14 @@
                         <li>@Html.ActionLink("Create new Account", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
 
                         <li>@Html.ActionLink("Manage Accounts", "Index", "Admins")</li>
+
                     }
+
+
+
 
                     @if (Request.IsAuthenticated && User.IsInRole("Staff"))
                     {
-                        <li>@Html.ActionLink("Home1", "Index", "Home")</li>
-
                         <li>@Html.ActionLink(" Idea", "Index", "Ideas")</li>
                         <li>@Html.ActionLink("Comment", "Index", "Comments")</li>
                         <li>@Html.ActionLink(" Department", "Index", "Departments")</li>
@@ -45,6 +47,18 @@
                         <li>@Html.ActionLink("Category", "Index", "Categories")</li>
 
                     }
+
+
+                    <li>@Html.ActionLink("Create new Account", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+
+                    <li>@Html.ActionLink("Manage Accounts", "Index", "Admins")</li>
+
+                    <li>@Html.ActionLink(" Idea", "Index", "Ideas")</li>
+                    <li>@Html.ActionLink("Comment", "Index", "Comments")</li>
+                    <li>@Html.ActionLink(" Department", "Index", "Departments")</li>
+                    <li>@Html.ActionLink(" Item", "Index", "Items")</li>
+                    <li>@Html.ActionLink(" IdeasUser", "Index", "IdeaUsers")</li>
+                    <li>@Html.ActionLink("Category", "Index", "Categories")</li>
 
                 </ul>
 

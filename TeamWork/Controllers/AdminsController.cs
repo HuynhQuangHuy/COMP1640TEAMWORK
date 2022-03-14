@@ -20,7 +20,7 @@ namespace TeamWork.Controllers
         }
 
         // GET: Admins
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             //Láy giá trị từ bẳng AspNetUser và liên kết với bảng AspnetRole thông qua bảng AspNetUserRole
@@ -60,7 +60,7 @@ namespace TeamWork.Controllers
 
         //Delete Account
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);
@@ -77,7 +77,7 @@ namespace TeamWork.Controllers
 
         //Edit 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);
@@ -90,7 +90,7 @@ namespace TeamWork.Controllers
 
         //EDIT
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Edit(ApplicationUser user)
         {
             if (!ModelState.IsValid)
@@ -120,7 +120,7 @@ namespace TeamWork.Controllers
 
         //Reset password
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult ChangePass(string id)
         {
             var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);

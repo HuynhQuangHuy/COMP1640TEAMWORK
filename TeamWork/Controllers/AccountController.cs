@@ -139,7 +139,7 @@ namespace TeamWork.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             {
