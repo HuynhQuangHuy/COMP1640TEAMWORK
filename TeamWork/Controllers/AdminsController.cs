@@ -137,9 +137,9 @@ namespace TeamWork.Controllers
             {
                 //userManager bằng quản lý người dùng mới, mang dữ liệu mới 
                 UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-                //Xoá password hiện tại của userManager 
+                //Xoá password hiện tại của User
                 userManager.RemovePassword(userId);
-                //Thay password mới "123456789" cho userManager
+                //Thay password mới "Abc@@1234" cho User
                 String newPassword = "Abc@@1234";
                 userManager.AddPassword(userId, newPassword);
             }

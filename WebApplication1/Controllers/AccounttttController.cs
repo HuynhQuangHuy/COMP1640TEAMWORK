@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -140,11 +141,10 @@ namespace TeamWork.Controllers
         //
         // GET: /Account/Register
         //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
         public ActionResult Register()
         {
             {
-                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin") )
+                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                                 .ToList(), "Name", "Name");
                 return View();
             }
@@ -152,7 +152,6 @@ namespace TeamWork.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         //[Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
