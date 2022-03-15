@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿
+using Microsoft.AspNet.Identity;
 using TeamWork.Models;
 using TeamWork.ViewModels;
 using System;
@@ -58,7 +59,7 @@ namespace TeamWork.Controllers
             {
                 db.Ideas.Add(idea);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SendEmailToUser", "Ideas");
             }
 
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
@@ -165,23 +166,10 @@ namespace TeamWork.Controllers
             var getUserName = User.Identity.GetUserName();
 
 
-            //Get current Coordinator Email
-            var CourseClass = (from c in db.Ideas
-                               where c.UserId.Contains(currentUser)
-                               join cl in db.Items
-                               on c.ItemId equals cl.Id
-                               select cl.CoordinatorId).ToList();
-            var CoorId = "081de30f-8ccd-427f-9adf-6fe8a4a9adac";
-
-            var coordinator = db.Users.Where(m => m.Id.Contains(CoorId)).Select(m => m.Email).ToList();
-            var coordinatorEmail = coordinator[0];
-
-            //Get current Idea description
-            var course = db.Ideas.Where(m => m.UserId.Contains(currentUser)).Select(m => m.Description).ToList();
-            var courseName = course[0];
+         
 
 
-            result = SendEmail($"{coordinatorEmail}", "Notification Email", $"Staff: {getUserName} <br> Ideas: {courseName} <br> Already submit a post");
+            result = SendEmail("huyhqgcd18671@fpt.edu.vn", "Notification Email", $"Staff: {getUserName} <br> Ideas:  <br> Already submit a post");
 
 
             Json(result, JsonRequestBehavior.AllowGet);
