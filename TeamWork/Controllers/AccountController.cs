@@ -139,8 +139,8 @@ namespace TeamWork.Controllers
 
         //
         // GET: /Account/Register
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        
         public ActionResult Register()
         {
             {
@@ -152,8 +152,8 @@ namespace TeamWork.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
-        //[Authorize(Roles = "Admin")]
+        
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
