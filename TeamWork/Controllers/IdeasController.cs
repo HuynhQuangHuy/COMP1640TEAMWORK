@@ -165,10 +165,6 @@ namespace TeamWork.Controllers
             var currentUser = User.Identity.GetUserId();
             var getUserName = User.Identity.GetUserName();
 
-
-         
-
-
             result = SendEmail("huyhqgcd18671@fpt.edu.vn", "Notification Email", $"Staff: {getUserName} <br> Ideas:  <br> Already submit a post");
 
 
