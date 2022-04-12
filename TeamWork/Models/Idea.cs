@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace TeamWork.Models
 {
     public class Idea
@@ -31,5 +32,7 @@ namespace TeamWork.Models
 
         public string UrlFile { get; set; }
         public string NameOfFile { get; set; }
+
+ 
     }
 }

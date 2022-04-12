@@ -24,7 +24,6 @@ namespace TeamWork.Models
         [DisplayName("Thumb Up")]
         public bool IsThumbUp { get; set; }
 
-        [DisplayName("Thumb Down")]
-        public bool IsThumbDown { get; set; }
+        public int LikeCount { get; set; }
     }
 }

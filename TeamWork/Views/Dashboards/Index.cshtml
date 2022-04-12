@@ -1,0 +1,179 @@
+﻿@model IEnumerable<TeamWork.Models.Item>
+@{
+    ViewBag.Title = "ManageMyAssignment";
+}
+
+@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    <html lang="en">
+
+    <head>
+        <title>Charts</title>
+       
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+        <script src="~/Scripts/Chart.min.js"></script>
+    </head>
+
+    <body>
+
+      
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <div class="pcoded-content">
+                    <div class="pcoded-inner-content">
+                      
+                        <!-- [ breadcrumb ] end -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- [ Main Content ] start -->
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>All Ideas Chart</h5>
+                                                <span class="d-block m-t-5">Show<em><code> All Idea</code></em> available on web</span>
+                                            </div>
+                                            <div class="card-block">
+                                                <canvas id="myChart" width="400" height="400"></canvas>
+                                                <script>
+                                                 @* X *@
+	var datas = @Html.Raw(Json.Encode(ViewBag.DEPARTMENTTYPE));
+	@* Y *@
+	var dataArray = @Html.Raw(Json.Encode(ViewBag.ANALYSISDATA));
+                                                    const ctx = document.getElementById('myChart').getContext('2d');
+                                                    const myChart = new Chart(ctx, {
+                                                        type: 'bar',
+                                                        data: {
+                                                            labels: datas,
+                                                            datasets: [{
+                                                                label: "All Ideas",
+                                                                data: dataArray,
+                                                                backgroundColor: [
+                                                                    'rgba(255, 99, 132, 0.2)',
+                                                                    'rgba(54, 162, 235, 0.2)',
+                                                                    'rgba(255, 206, 86, 0.2)',
+                                                                    'rgba(75, 192, 192, 0.2)',
+                                                                    'rgba(153, 102, 255, 0.2)',
+                                                                    'rgba(255, 159, 64, 0.2)'
+                                                                ],
+                                                                borderColor: [
+                                                                    'rgba(255, 99, 132, 1)',
+                                                                    'rgba(54, 162, 235, 1)',
+                                                                    'rgba(255, 206, 86, 1)',
+                                                                    'rgba(75, 192, 192, 1)',
+                                                                    'rgba(153, 102, 255, 1)',
+                                                                    'rgba(255, 159, 64, 1)'
+                                                                ],
+                                                                borderWidth: 1
+                                                            }]
+                                                        },
+                                                        options: {
+                                                            maintaninAspecRatio: false,
+                                                            scales: {
+                                                                xAxes: [{ ticks: { beginAtZero: true } }],
+                                                                yAxes: [{
+                                                                    ticks: {
+                                                                        min: 0,
+                                                                    }
+                                                                }]
+
+                                                            },
+                                                            legend: { display: true }
+                                                        },
+                                                    });
+                                                </script>
+
+                                                <!-- [ Main Content ] end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>All Idead in Department Chart</h5>
+                                                <span class="d-block m-t-5">Show <em><code>all ideas in Department</code></em> available on Web</span>
+                                            </div>
+                                            <div class="card-block">
+                                                <div>
+                                                    <canvas id="pie_Chart"></canvas>
+                                                </div>
+                                                <script src="~/Scripts/Chart.min.js"></script>
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+                                                <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+
+                                                <script>
+	@* X *@
+	var datas = @Html.Raw(Json.Encode(ViewBag.DEPARTMENTTYPE));
+	@* Y *@
+	var dataArray = @Html.Raw(Json.Encode(ViewBag.ANALYSISDATA));
+	var canvas = document.getElementById('pie_Chart');
+	var pieChart = new Chart(canvas, {
+	  type: 'pie',
+	  data: {
+		labels: datas,
+		datasets: [{
+		  data: dataArray,
+			backgroundColor: [
+				'#F8A2BA',
+				'#0FD6C6',
+				'#95D47A',
+				'#F0B38B',
+				'#87C0BC',
+				'#F1FB6E',
+				'#C3F3C2',
+				'#666A8D',
+				'#C1AD45',
+				'#15D3F3',
+				'#AA9193'
+			],
+			borderColor: [
+				'#F8A2BA',
+				'#0FD6C6',
+				'#95D47A',
+				'#F0B38B',
+				'#87C0BC',
+				'#F1FB6E',
+				'#C3F3C2',
+				'#666A8D',
+				'#C1AD45',
+				'#15D3F3',
+				'#AA9193'
+			],
+			borderWidth: 1
+		}]
+	  },
+		options: {
+			responive: true,
+			maintaninAspecRatio: true,
+				labels: {
+					render: 'percentage',
+					precision: 2
+				},
+				legend: { display: true }
+		},
+	});
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+        <!-- Required Js -->
+        <script src="~/assets/js/vendor-all.min.js"></script>
+        <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/assets/js/pcoded.min.js"></script>
+    </body>
+</html>
+}

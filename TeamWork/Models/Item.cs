@@ -10,6 +10,7 @@ namespace TeamWork.Models
         [Required]
         public string Name { get; set; }
         public string CreateBy { get; set; }
+        
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string CoordinatorId { get; set; }

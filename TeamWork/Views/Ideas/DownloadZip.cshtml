@@ -1,0 +1,55 @@
+﻿@using TeamWork.ViewModels
+@model List<DownloadZipViewmodel>
+@{
+    ViewBag.Title = "DownloadZip";
+}
+
+@using Microsoft.AspNet.Identity
+
+@using (Html.BeginForm("DownloadZip", "Ideas", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Post Name</th>
+                    <th>Student Name</th>
+                    <th>Assignment Name</th>
+                    <th>File Name</th>
+                    @if (User.IsInRole("Staff"))
+                    {
+                        <th>Course Name</th>
+                        <th>Coordinator Name</th>
+                        <th>Faculty Name</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <tr>
+                        <td>@Html.CheckBoxFor(m => m[i].IsSelected)</td>
+                        <th>@Model[i].PostName</th>
+                        <th>@Model[i].StudentName</th>
+                        <th>@Model[i].AssignmentName</th>
+                        <td>
+                            @Model[i].FileName
+                            @Html.HiddenFor(m => m[i].FilePath)
+                            @Html.HiddenFor(m => m[i].FileName)
+                        </td>
+                        @if (User.IsInRole("Marketing Manager"))
+                        {
+                            <th>@Model[i].CourseName</th>
+                            <th>@Model[i].CoordinatorName</th>
+                            <th>@Model[i].FacultyName</th>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <center><input class="btn btn-primary" type="submit" value="Download" /></center>
+    </div>
+}

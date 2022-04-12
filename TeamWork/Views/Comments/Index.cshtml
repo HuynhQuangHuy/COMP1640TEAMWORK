@@ -5,36 +5,97 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Idea.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
+<div class="page-content">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Idea.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
 
-</table>
+    <div class="page-header">
+        <h1>
+            Comment
+            <a href="~/Comments/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
+        </h1>
+
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <table id="simple-table" class="table  table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Idea.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.NumberOfLikes)
+                                </th>
+                                
+                                @if (User.IsInRole("Staff"))
+                                {
+                                    <th>Delete</th>
+                                    <th>Like</th>
+                                }
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Idea.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumberOfLikes)
+                                </td>
+
+                                <td>
+
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                                @if (User.IsInRole("Staff"))
+                                {
+                                    if (item.IsLike == false)
+                                    {
+                                        <td>  @Html.ActionLink("Like", "Like", new { id = item.Id })</td>
+                                    }
+                                    else if (item.IsLike == true)
+                                    {
+                            <td>  @Html.ActionLink("Unlike", "Unlike", new { id = item.Id })</td>
+                                    }
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div><!-- /.span -->
+            </div><!-- /.row -->
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<script>
+    function Edit(id, like) {
+        $.ajax({
+            type: "POST",
+            data: { id: id, like: like },
+            url: 'Edit',
+        }).done(function (result) {
+            var html = ""
+            for (var i = 0; i < result.length; i++) {
+                html += '<tr><td>' + result[i].id + '</td><td>' + result[i].numberOfLikes + '</td><td>' + result[i].numberOfDislikes + '</td><td><button onclick="Edit(' + result[i].id + ',true)">Like</button><button onclick="Edit(' + result[i].id + ',false)">Dislike</button></td></tr>'
+            }
+            document.getElementById("tbody1").innerHTML = html;
+        });
+    }
+</script>

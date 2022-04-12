@@ -1,64 +1,85 @@
-﻿@model IEnumerable<TeamWork.Models.Idea>
+﻿@model PagedList.IPagedList<TeamWork.Models.Idea>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Item.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.File)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UrlFile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NameOfFile)
-        </th>
-        <th></th>
-    </tr>
+<div class="page-content">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.File)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UrlFile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameOfFile)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
 
-</table>
+    <div class="page-header">
+        <h1>
+            Ideas
+            <a href="~/Ideas/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
+        </h1>
+
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <table id="simple-table" class="table  table-bordered table-hover">
+                        <thead>
+                            <tr>
+                              
+                                <th>
+                                    Idea Description
+                                </th>
+                                <th>
+                                    CreatedAt
+                                </th>
+                                <th>
+                                    UrlFile
+                                </th>
+                                <th>
+                                    NameOfFile
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UrlFile)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NameOfFile)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                 
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div><!-- /.span -->
+            </div><!-- /.row -->
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))

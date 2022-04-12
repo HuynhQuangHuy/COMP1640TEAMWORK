@@ -37,6 +37,8 @@ namespace TeamWork.Controllers
         }
 
         // GET: Comments/Create
+        // GET: Comments/Create
+        [Authorize(Roles = "Staff")]
         public ActionResult Create()
         {
             ViewBag.IdeaId = new SelectList(db.Ideas, "Id", "Description");
@@ -46,6 +48,7 @@ namespace TeamWork.Controllers
         // POST: Comments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,IdeaId,Description")] Comment comment)
@@ -61,6 +64,25 @@ namespace TeamWork.Controllers
             return View(comment);
         }
 
+        public ActionResult Like(int id)
+        {
+           Comment update = db.Comments.ToList().Find(u => u.Id == id);
+            update.IsLike = true;
+            update.NumberOfLikes += 1;
+            
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Unlike(int id)
+        {
+            Comment update = db.Comments.ToList().Find(u => u.Id == id);
+            update.IsLike = false;
+            update.NumberOfLikes -= 1;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -82,10 +104,11 @@ namespace TeamWork.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdeaId,Description")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,IdeaId,Description")] Comment comment, IdeaUser ideaUser)
         {
             if (ModelState.IsValid)
             {
+                comment.NumberOfLikes = ideaUser.LikeCount;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

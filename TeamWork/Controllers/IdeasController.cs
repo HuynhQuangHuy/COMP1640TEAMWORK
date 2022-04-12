@@ -1,5 +1,5 @@
-﻿
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
+using Ionic.Zip;
 using TeamWork.Models;
 using TeamWork.ViewModels;
 using System;
@@ -12,6 +12,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Web.Mvc;
+using System.Web;
+using PagedList;
 
 namespace TeamWork.Controllers
 {
@@ -19,12 +21,64 @@ namespace TeamWork.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Ideas
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+
             var ideas = db.Ideas.Include(i => i.Item);
-            return View(ideas.ToList());
+            // 1. Tham số int? dùng để thể hiện null và kiểu int
+            // page có thể có giá trị là null và kiểu int.
+
+            // 2. Nếu page = null thì đặt lại là 1.
+            if (page == null) page = 1;
+
+            // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
+            // theo LinkID mới có thể phân trang.
+            var links = (from l in db.Ideas
+                         select l).OrderBy(x => x.Id);
+
+            // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
+            int pageSize = 5;
+
+            // 4.1 Toán tử ?? trong C# mô tả nếu page khác null thì lấy giá trị page, còn
+            // nếu page = null thì lấy giá trị 1 cho biến pageNumber.
+            int pageNumber = (page ?? 1);
+
+            // 5. Trả về các Link được phân trang theo kích thước và số trang.
+            return View(links.ToPagedList(pageNumber, pageSize));
         }
+
+        // GET: Comments/Create
+        public ActionResult CreateComment()
+        {
+
+            return View();
+        }
+
+        // POST: Comments/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComment(Comment comment, int? id)
+        {
+            var IdeaInDb = db.Ideas.SingleOrDefault(i => i.Id == id);
+            var newComment = new Comment
+            {
+                Description = comment.Description,
+                IdeaId = IdeaInDb.Id
+            };
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(newComment);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+         
+            return View(comment);
+        }
+        // GET: Ideas
+     
 
         // GET: Ideas/Details/5
         public ActionResult Details(int? id)
@@ -42,44 +96,107 @@ namespace TeamWork.Controllers
         }
 
         // GET: Ideas/Create
-        public ActionResult Create()
+        [Authorize(Roles = "Staff")]
+        public ActionResult Create(int? id)
         {
-            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");
-            return View();
-        }
+            var assignemntInDb = db.Items.SingleOrDefault(i => i.Id == id);
 
+            ////////check validation: Deadline currentdate > EndDate
+            //Find Enddate in currentDeadline
+            int status = 1; // st=1 => can submit /// st=0 => can't submit
+            /*  var endDateList = (from ass in db.Ideas
+                                 where ass.Id == id
+                                 join d in db.Items
+                                 on ass.ItemId equals d.Id
+                                 select d.EndDate).ToList();
+              var endDate = endDateList[0];
+
+              //check deadline
+              if (DateTime.Now > endDate) //error
+              {
+                  status = 0;
+              }
+            */
+            var newPostAssignmentViewModel = new PostAssignmentViewModel
+            {
+                Item = assignemntInDb,
+                StatusPost = status
+            };
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");
+            return View(newPostAssignmentViewModel);
+        }
         // POST: Ideas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,Description,CreatedAt,File,UrlFile,NameOfFile")] Idea idea)
+        public ActionResult Create([Bind(Include = "Id,ItemId,Description,CreatedAt,File,UrlFile,NameOfFile")] HttpPostedFileBase file, Idea idea, Item item, int? id)
+
         {
-            if (ModelState.IsValid)
+            if (file == null)
             {
-                db.Ideas.Add(idea);
-                db.SaveChanges();
-                return RedirectToAction("SendEmailToUser", "Ideas");
+                return View("~/Views/ErrorValidations/Null.cshtml");
             }
 
-            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
-            return View(idea);
-        }
+            var validationExtension = System.IO.Path.GetExtension(file.FileName);
+            if (validationExtension == ".jpg" || validationExtension == ".jpeg" || validationExtension == ".png" || validationExtension == ".doc" || validationExtension == ".docx" || validationExtension == ".pdf")
+            {
+                if (file != null && file.ContentLength > 0)
+                {
 
-        // GET: Ideas/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    var userName = User.Identity.GetUserName();
+                    string prepend = userName;
+                    //string converted = base64String.Replace('-', '+');
+                    // converted = converted.Replace('_', '/');
+                    idea.File = new byte[file.ContentLength]; // image stored in binary formate
+                    file.InputStream.Read(idea.File, 0, file.ContentLength);
+                    string fileName = prepend + System.IO.Path.GetFileName(file.FileName);
+                    string urlImage = Server.MapPath("~/Files/" + fileName);
+                    idea.NameOfFile = fileName;
+                    file.SaveAs(urlImage);
+                    idea.UrlFile = "Files/" + fileName;
+                }
+
+                var assignemntInDb = db.Items.SingleOrDefault(i => i.Id == id);
+
+                /* var newPost = new Idea
+                 {
+                     NameOfFile = idea.NameOfFile,
+                     ItemId = assignemntInDb.Id,
+                     Description = idea.Description,
+
+                     File = idea.File,
+                     UrlFile = idea.UrlFile
+                 };
+
+                 if (newPost.Description == null || newPost.NameOfFile == null)
+                 {
+                     return View("~/Views/ErrorValidations/Null.cshtml");
+                 }
+
+                 var check = db.Ideas.Where(x => x.NameOfFile.Contains(newPost.NameOfFile)).FirstOrDefault();
+                 if (check != null)
+                 {
+                     return View("~/Views/ErrorValidations/Null.cshtml");
+                 }
+                */
+                if (file != null)
+                {
+                    idea.CreatedAt = DateTime.Now;
+                    db.Ideas.Add(idea);
+                    db.SaveChanges();
+                    return RedirectToAction("SendEmailToUser", "Ideas");
+                }
+
+                ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
+                return View(idea);
+
             }
-            Idea idea = db.Ideas.Find(id);
-            if (idea == null)
+            else
             {
-                return HttpNotFound();
+                return View("~/Views/ErrorValidations/Null.cshtml");
             }
-            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
-            return View(idea);
         }
 
         // POST: Ideas/Edit/5
@@ -98,7 +215,7 @@ namespace TeamWork.Controllers
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", idea.ItemId);
             return View(idea);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Ideas/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -170,6 +287,76 @@ namespace TeamWork.Controllers
 
             Json(result, JsonRequestBehavior.AllowGet);
             return View();
+        }
+
+        //Download zip 
+        //Coordinator & Marketing Manager
+        
+        [HttpGet]
+        public ActionResult DownloadZip()
+        {
+            //get current user (coor / manager) 
+            var currentUser = User.Identity.GetUserName();
+            string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/"));
+            List<DownloadZipViewmodel> fileViewmodels = new List<DownloadZipViewmodel>();
+            foreach (string filePath in filePaths)
+            {
+                //Get filename
+                string fileName = Path.GetFileName(filePath);
+                //Split tail
+                string[] splitTail = fileName.Split('.');
+                //get file name without tail 
+                string headfile = splitTail[0];
+                //Get element
+                string[] splitElement = headfile.Split('-');
+                //Get student name 
+                string studentName = splitElement[0];
+             
+                ////Get PostName////
+                var postNameList = db.Ideas.Where(m => m.NameOfFile.Contains(fileName)).Select(m => m.Description).ToList();
+               
+
+   
+                
+                   
+                        fileViewmodels.Add(new DownloadZipViewmodel()
+                        {
+                            /*FileName = Path.GetFileName(filePath),*/
+                            FileName = Path.GetExtension(filePath),
+                            FilePath = filePath,
+    
+                            StudentName = studentName,
+                       
+                        });
+                    
+                
+            }
+            return View(fileViewmodels);
+        }
+
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DownloadZip(List<DownloadZipViewmodel> files)
+        {
+            using (ZipFile zip = new ZipFile())
+            {
+                zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+                zip.AddDirectoryByName("Files");
+                foreach (DownloadZipViewmodel file in files)
+                {
+                    if (file.IsSelected)
+                    {
+                        zip.AddFile(file.FilePath, "Files");
+                    }
+                }
+                string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    zip.Save(memoryStream);
+                    return File(memoryStream.ToArray(), "application/zip", zipName);
+                }
+            }
         }
 
     }

@@ -1,0 +1,115 @@
+﻿@model TeamWork.ViewModels.PostAssignmentViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated && User.IsInRole("Staff"))
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <body>
+
+        <!-- [ Header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <div class="pcoded-content">
+                    <div class="pcoded-inner-content">
+                        <div class="pcoded-inner-content">
+                            <!-- [ breadcrumb ] start -->
+                            <div class="page-header">
+                                <div class="page-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-12">
+                                            <div class="page-header-title">
+                                                <h5 class="m-b-10">@Html.DisplayName("Welcome,  " + User.Identity.GetUserName() + "!")</h5>
+                                            </div>
+                                            <ul class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="~/Home/Index"><i class="feather icon-home"></i></a></li>
+                                                <li class="breadcrumb-item"><a href="javascript:">Submit Post</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ breadcrumb ] end -->
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5> Submit My Post</h5>
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            @using (Html.BeginForm("SubmitPost", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <div class="form-group">
+                                                    @Html.LabelFor(p => p.Idea.Description)
+                                                    @Html.TextBoxFor(p => p.Idea.Description, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(p => p.Idea.Description, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                @Html.HiddenFor(p => p.Idea.ItemId)
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Idea.File)
+                                                    <div class="form-group">
+                                                        <input type="file" name="File" id="File" required />
+                                                    </div>
+                                                </div>
+                                                <br />
+
+
+                                                <div>
+                                                    <input type="checkbox" id="rterms" value="Agreed-to-Terms" name="rterms" required> I agree with Terms & Conditions.
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+
+                                                if (Model.StatusPost == 1)
+                                                {
+                                                    <br />
+
+                                                    <div type="submit">
+                                                        <button class="btn btn-primary">Submit</button>
+                                                    </div>
+
+
+
+
+                                                    @*<script>
+                                                            document.getElementById('sweetalert').click = function () {
+                                                                swal("Good job!", "You successfully submitted the post!", "success");
+                                                            };
+                                                        </script>*@
+
+
+
+
+                                                }
+                                                else
+                                                {
+                                                    <h1>You can't submit now.</h1>
+                                                }
+                                            }
+                                            <!-- [ Main Content ] end -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [ Main Content ] end -->
+        <!-- Required Js -->
+        <script src="~/assets/js/vendor-all.min.js"></script>
+        <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/assets/js/pcoded.min.js"></script>
+        <script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
+    </body>
+</html>
+}

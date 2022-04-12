@@ -37,6 +37,7 @@ namespace TeamWork.Controllers
         }
 
         // GET: Items/Create
+        [Authorize(Roles = "QA manager")]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
@@ -47,17 +48,22 @@ namespace TeamWork.Controllers
         // POST: Items/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "QA manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CreateBy,StartDate,EndDate,CategoryId,DepartmentId")] Item item)
+        public ActionResult Create([Bind(Include = "Id,Name,CreateBy,StartDate,EndDate,CategoryId,DepartmentId")] Item item, string selectedDate)
         {
+            if (item.StartDate >= item.EndDate)
+            {
+                return View("~/Views/ErrorValidations/Null.cshtml");
+            }
             if (ModelState.IsValid)
             {
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.Message = "Selected Date: " + selectedDate;
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", item.CategoryId);
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Name", item.DepartmentId);
             return View(item);
@@ -99,6 +105,7 @@ namespace TeamWork.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "QA manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

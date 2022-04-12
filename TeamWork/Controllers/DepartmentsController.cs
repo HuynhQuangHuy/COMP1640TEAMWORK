@@ -36,6 +36,7 @@ namespace TeamWork.Controllers
         }
 
         // GET: Departments/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -44,6 +45,7 @@ namespace TeamWork.Controllers
         // POST: Departments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] Department department)
@@ -90,6 +92,7 @@ namespace TeamWork.Controllers
         }
 
         // GET: Departments/Delete/5
+    
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -5,48 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="page-content">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Idea.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsThumbUp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsThumbDown)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Idea.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsThumbUp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsThumbDown)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    <div class="page-header">
+        <h1>
+            IdeaUser
+            <a href="~/IdeaUsers/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
+        </h1>
 
+    </div><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <table id="simple-table" class="table  table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Comment.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Idea.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IsThumbUp)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LikeCount)
+                                </th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Comment.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Idea.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IsThumbUp)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LikeCount)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div><!-- /.span -->
+            </div><!-- /.row -->
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
 </table>
