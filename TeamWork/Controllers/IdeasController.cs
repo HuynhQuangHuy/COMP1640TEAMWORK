@@ -99,31 +99,19 @@ namespace TeamWork.Controllers
         [Authorize(Roles = "Staff")]
         public ActionResult Create(int? id)
         {
-            var assignemntInDb = db.Items.SingleOrDefault(i => i.Id == id);
+            var ItemDb = db.Items.SingleOrDefault(i => i.Id == id);
 
             ////////check validation: Deadline currentdate > EndDate
             //Find Enddate in currentDeadline
             int status = 1; // st=1 => can submit /// st=0 => can't submit
-            /*  var endDateList = (from ass in db.Ideas
-                                 where ass.Id == id
-                                 join d in db.Items
-                                 on ass.ItemId equals d.Id
-                                 select d.EndDate).ToList();
-              var endDate = endDateList[0];
-
-              //check deadline
-              if (DateTime.Now > endDate) //error
-              {
-                  status = 0;
-              }
-            */
-            var newPostAssignmentViewModel = new PostAssignmentViewModel
+           
+            var newIdeaViewModel = new PostAssignmentViewModel
             {
-                Item = assignemntInDb,
+                Item = ItemDb,
                 StatusPost = status
             };
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");
-            return View(newPostAssignmentViewModel);
+            return View(newIdeaViewModel);
         }
         // POST: Ideas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -147,8 +135,7 @@ namespace TeamWork.Controllers
 
                     var userName = User.Identity.GetUserName();
                     string prepend = userName;
-                    //string converted = base64String.Replace('-', '+');
-                    // converted = converted.Replace('_', '/');
+                
                     idea.File = new byte[file.ContentLength]; // image stored in binary formate
                     file.InputStream.Read(idea.File, 0, file.ContentLength);
                     string fileName = prepend + System.IO.Path.GetFileName(file.FileName);
@@ -158,29 +145,9 @@ namespace TeamWork.Controllers
                     idea.UrlFile = "Files/" + fileName;
                 }
 
-                var assignemntInDb = db.Items.SingleOrDefault(i => i.Id == id);
+                var ItemDb = db.Items.SingleOrDefault(i => i.Id == id);
 
-                /* var newPost = new Idea
-                 {
-                     NameOfFile = idea.NameOfFile,
-                     ItemId = assignemntInDb.Id,
-                     Description = idea.Description,
-
-                     File = idea.File,
-                     UrlFile = idea.UrlFile
-                 };
-
-                 if (newPost.Description == null || newPost.NameOfFile == null)
-                 {
-                     return View("~/Views/ErrorValidations/Null.cshtml");
-                 }
-
-                 var check = db.Ideas.Where(x => x.NameOfFile.Contains(newPost.NameOfFile)).FirstOrDefault();
-                 if (check != null)
-                 {
-                     return View("~/Views/ErrorValidations/Null.cshtml");
-                 }
-                */
+              
                 if (file != null)
                 {
                     idea.CreatedAt = DateTime.Now;
@@ -282,7 +249,7 @@ namespace TeamWork.Controllers
             var currentUser = User.Identity.GetUserId();
             var getUserName = User.Identity.GetUserName();
 
-            result = SendEmail("huyhqgcd18671@fpt.edu.vn", "Notification Email", $"Staff: {getUserName} <br> Ideas:  <br> Already submit a post");
+            result = SendEmail("huyhqgcd18671@fpt.edu.vn", "Notification Email", $"Staff: {getUserName} <br> Ideas:  <br> Already submit an idea");
 
 
             Json(result, JsonRequestBehavior.AllowGet);
@@ -313,11 +280,8 @@ namespace TeamWork.Controllers
                 string studentName = splitElement[0];
              
                 ////Get PostName////
-                var postNameList = db.Ideas.Where(m => m.NameOfFile.Contains(fileName)).Select(m => m.Description).ToList();
-               
+                var IdeaList = db.Ideas.Where(m => m.NameOfFile.Contains(fileName)).Select(m => m.Description).ToList();
 
-   
-                
                    
                         fileViewmodels.Add(new DownloadZipViewmodel()
                         {

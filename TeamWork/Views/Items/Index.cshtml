@@ -11,7 +11,7 @@
 
     <div class="page-header">
         <h1>
-            Categories
+            Item
             <a href="~/Items/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
         </h1>
 
@@ -73,9 +73,10 @@
                                         @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
                             }

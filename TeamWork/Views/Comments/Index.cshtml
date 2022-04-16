@@ -12,7 +12,10 @@
     <div class="page-header">
         <h1>
             Comment
-            <a href="~/Comments/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
+            @if (User.IsInRole("Staff"))
+            {
+                <a href="~/Comments/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
+            }
         </h1>
 
     </div><!-- /.page-header -->
@@ -56,23 +59,27 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NumberOfLikes)
                                 </td>
-
-                                <td>
-
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
                                 @if (User.IsInRole("Staff"))
                                 {
-                                    if (item.IsLike == false)
-                                    {
-                                        <td>  @Html.ActionLink("Like", "Like", new { id = item.Id })</td>
-                                    }
-                                    else if (item.IsLike == true)
-                                    {
-                            <td>  @Html.ActionLink("Unlike", "Unlike", new { id = item.Id })</td>
-                                    }
+                                    <td>
+
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                                    </td>
                                 }
-                            </tr>
+                                    @if (User.IsInRole("Staff"))
+                                    {
+                                        if (item.IsLike == false)
+                                        {
+                                            <td>  @Html.ActionLink("Like", "Like", new { id = item.Id }, new { @class = "btn btn-sm btn-primary" })</td>
+                                        }
+                                        else if (item.IsLike == true)
+                                        {
+                                            <td>  @Html.ActionLink("Unlike", "Unlike", new { id = item.Id }, new { @class = "btn btn-sm btn-primary" })</td>
+                                        }
+                                    }
+                                </tr>
                             }
                         </tbody>
                     </table>

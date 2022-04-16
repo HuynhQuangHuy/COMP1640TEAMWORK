@@ -13,9 +13,12 @@
     <div class="page-header">
         <h1>
             Ideas
-            <a href="~/Ideas/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
-        </h1>
+            @if (User.IsInRole("Staff"))
+            {
+                <a href="~/Ideas/Create" class="btn btn-xs btn-info active pull-right" aria-pressed="true">Create New</a>
 
+            }
+        </h1>
     </div><!-- /.page-header -->
 
     <div class="row">
@@ -45,28 +48,32 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                   
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedAt)
-                                    </td>
+                            <tr>
 
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UrlFile)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NameOfFile)
+                                </td>
+                                @if (User.IsInRole("Staff"))
+                                {
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UrlFile)
+
+                                       
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NameOfFile)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                    </td>
-                                 
-                                </tr>
+                                }
+
+                            </tr>
                             }
                         </tbody>
                     </table>
